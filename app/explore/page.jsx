@@ -9,12 +9,14 @@ export default function Explore() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
+        const key = process.env.NEXT_PUBLIC_STOCK_API_KEY;
+        const host = process.env.NEXT_PUBLIC_STOCK_API_HOST;
         const url = `https://mboum-finance.p.rapidapi.com/mo/module/?symbol=${stock}&module=financial-data`;
         const options = {
           method: 'GET',
           headers: {
-            'X-RapidAPI-Key': '2f897fcedbmsh980fcbcfc4cbb38p1bf4b7jsn18e40b49644f',
-            'X-RapidAPI-Host': 'mboum-finance.p.rapidapi.com'
+            'X-RapidAPI-Key': key,
+            'X-RapidAPI-Host': host
           }
         };
         
