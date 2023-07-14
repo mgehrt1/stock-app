@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import SignIn from '../components/SignIn'
 
 export default function Nav() {
     return (
@@ -8,7 +7,13 @@ export default function Nav() {
             <div className='flex justify-between'>
                 <Link href={'/'} className='mr-20'>Feed</Link>
                 <Link href={'/explore'} className='mr-20'>Explore</Link>
-                <SignIn />
+                <div className="group w-14">
+                    <h1>PFP</h1>
+                    <ul>
+                        <li><Link href='/sign-up' className="hidden absolute group-hover:block">Sign Up</Link></li>
+                        <li><Link href='/sign-in' className="hidden absolute top-12 group-hover:block">Sign In</Link></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     )
