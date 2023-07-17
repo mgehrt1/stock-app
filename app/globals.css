@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.forgotPasswordLink{
+      color: blue;
+      background-color: transparent;
+      text-decoration: none;
+      font-size: 12px;
+}
