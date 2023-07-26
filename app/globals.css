@@ -9,3 +9,33 @@
       text-decoration: none;
       font-size: 12px;
 }
+
+.sign-up-page {
+      text-align: center;
+      padding: 5rem 3rem 5rem 3rem;
+      border: solid rgb(68, 68, 152) 5px;
+      margin: 8rem 30rem 20rem 30rem;
+      border-radius: 50px;
+      background-color: whitesmoke;
+}
+
+.sign-up-text {
+      color:black;
+      font-family:'Times New Roman', Times, serif;
+      font-size: 40px;
+}
+
+.input {
+      border: solid black 2px;
+      border-radius: 10px;
+      padding: 20px 20px 20px 20px;
+      margin: 10px 10px 10px 10px;
+}
+
+.sign-up-btn {
+      border: solid blue 2px;
+      border-radius: 15px;
+      padding: 5px 5px 5px 5px;
+      background-color: lightskyblue;
+}
+
