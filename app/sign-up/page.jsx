@@ -14,7 +14,7 @@ export default function SignUp() {
             <br></br>
             <h1 className=''>Forgot password?</h1>
             <br></br>
-            <button className='sign-up-btn'><a href="C:/stock-app-1/app/home.jsx">Sign up</a></button>
+            <button className='sign-up-btn'><a href="">Sign up</a></button>
         </div>
     );
 }
