@@ -5,7 +5,7 @@ export default function Nav() {
         <nav className='flex justify-between mb-4 px-20'>
             <h1>Nav Bar: </h1>
             <div className='flex justify-between'>
-                <Link href={'/'} className='mr-20'>Feed</Link>
+                <Link href={'/home'} className='mr-20'>Feed</Link>
                 <Link href={'/explore'} className='mr-20'>Explore</Link>
                 <div className="group w-14">
                     <h1>PFP</h1>
