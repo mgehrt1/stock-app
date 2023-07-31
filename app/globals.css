@@ -2,40 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-.forgotPasswordLink{
-      color: blue;
-      background-color: transparent;
-      text-decoration: none;
-      font-size: 12px;
+.bubbles {
+  position: relative;
+  display: flex;
+}
+
+.bubbles span {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background: rgb(92, 92, 181);
+  margin: 0 4px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px rgb(126, 126, 188), 0 0 50px rgb(92, 92, 181),
+    0 0 100px rgb(92, 92, 181);
+  animation: animate 15s linear infinite;
+}
+
+.bubbles span:nth-child(even) {
+  background: rgb(205, 212, 96);
+  box-shadow: 0 0 0 10px rgb(205, 212, 96), 0 0 50px rgb(205, 212, 96),
+    0 0 100px rgb(205, 212, 96);
+}
+
+@keyframes animate {
+  0% {
+    transform: translateY(100vh) scale(0);
+  }
+
+  100% {
+    transform: translateY(-10vh) scale(1);
+  }
+}
+
+.forgotPasswordLink {
+  color: blue;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 12px;
 }
 
 .sign-up-page {
-      text-align: center;
-      padding: 5rem 3rem 5rem 3rem;
-      border: solid rgb(68, 68, 152) 5px;
-      margin: 8rem 30rem 20rem 30rem;
-      border-radius: 50px;
-      background-color: whitesmoke;
+  text-align: center;
+  padding: 3rem 3rem 5rem 3rem;
+  border: solid rgb(92, 92, 164) 5px;
+  margin: 8rem 30rem 20rem 30rem;
+  border-radius: 50px;
+  background-color: transparent;
 }
 
 .sign-up-text {
-      color:black;
-      font-family:'Times New Roman', Times, serif;
-      font-size: 40px;
+  color: rgb(29, 4, 4);
+  font-family: "Times New Roman", Times, serif;
+  font-size: 40px;
+  padding-bottom: 1rem;
 }
 
 .input {
-      border: solid black 2px;
-      border-radius: 10px;
-      padding: 20px 20px 20px 20px;
-      margin: 10px 10px 10px 10px;
+  border: solid rgb(125, 124, 124) 2px;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  margin: 10px 10px 10px 10px;
 }
 
 .sign-up-btn {
-      border: solid blue 2px;
-      border-radius: 15px;
-      padding: 5px 5px 5px 5px;
-      background-color: lightskyblue;
+  position: relative;
+  text-transform: uppercase;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  font-weight: 450;
+  border: solid rgb(92, 92, 164) 2px;
+  border-radius: 15px;
+  padding: 10px 30px 10px 30px;
+  margin: 5px 0 5px 0;
+  background-color: rgb(249, 250, 251);
+  transition: 0.5s;
 }
 
+.sign-up-btn:hover {
+  background: rgb(92, 92, 164);
+  letter-spacing: 0.2em;
+  color: whitesmoke;
+  box-shadow: 0 0 25px rgb(92, 92, 164);
+}
+
+.sign-up-btn:before {
+  content: "";
+  position: absolute;
+  /*inset: 2px; */
+  background: rgb(92, 92, 164);
+}

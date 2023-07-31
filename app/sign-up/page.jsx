@@ -1,20 +1,18 @@
-import 'app/globals.css';
+import "app/globals.css";
+import { Auth } from "components/auth.js";
 
 export default function SignUp() {
-    return (
+  return (
+    <div className="bubbles">
+      <div className="sign-up-page">
+        <h1 className="sign-up-text">Create a new account</h1>
+        <input className="input" type="text" placeholder="First name"></input>
+        <input className="input" type="text" placeholder="Last name"></input>
 
-        <div className='sign-up-page'>
-            <h1 className='sign-up-text'>Create a new account</h1>
-            <input className='input' type="text" placeholder='First name'></input>
-            <input className='input' type="text" placeholder='Last name'></input>
-            <input className='input' type="text" placeholder='Email'></input>
-            <br></br>
+        <Auth />
 
-            <input className='input' type='password' placeholder='Password'></input>
-            <br></br>
-            <h1 className=''>Forgot password?</h1>
-            <br></br>
-            <button className='sign-up-btn'><a href="\home.jsx">Sign up</a></button>
-        </div>
-    );
+        <h1 className="">Forgot password?</h1>
+      </div>
+    </div>
+  );
 }
