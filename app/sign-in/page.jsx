@@ -1,5 +1,7 @@
-'use client'
-import 'app/globals.css';
+"use client";
+import { LogIn } from "@app/components/sign-in-page";
+import "app/globals.css";
+import "app/bootstrap.min.css";
 
 import { useState } from "react";
 
@@ -9,25 +11,6 @@ export default function SignIn() {
 
   const handleUserSubmit = async (e) => {
     e.preventDefault();
-    
-    
-
-  }
-  return (
-    <body className="SignInBackground">
-      <div>
-        <h1 className='h1'>Username:</h1>
-        <form>
-          <input type="text" name="username" placeholder="Enter Username" value={username} onChange={(e) => setUser(e.target.value) } className ="border-2 border-black" />
-          <br></br>
-          <br></br>
-          <h1>Password:</h1>
-          <input type="password" name="password" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value) } className ="border-2 border-black"/>
-          <input type="submit" value="Search" className="border-2 border-black bg-gray-200 ml-2 px-2" />
-          <br></br>
-          <a className="forgotPasswordLink" href="./forgotpassword">Forgot password?</a>
-        </form>
-      </div>
-    </body>
-  ) 
+  };
+  return <LogIn></LogIn>;
 }

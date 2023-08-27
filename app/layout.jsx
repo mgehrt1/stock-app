@@ -1,6 +1,19 @@
+"use client";
+
 import "app/globals.css";
-import Nav from "../components/nav";
-import { Auth } from "../components/auth";
+import Nav from "./components/nav";
+import { ReactDOM, useEffect, useState } from "react";
+import { Auth } from "./components/auth";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
+import { db } from "./firebase-config";
+import { getDocs, collection } from "firebase/firestore";
+import { AuthContextProvider } from "./context/AuthContext";
 
 export const metadata = {
   title: "Stock App by FMJ",
@@ -8,12 +21,35 @@ export const metadata = {
 };
 
 export default function Layout({ children }) {
+  const [user, setUser] = useState([]);
+
+  const userCollectionRef = collection(db, "users");
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const data = await getDocs(userCollectionRef);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        console.log(filteredData);
+        setUser(filteredData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUser();
+  }, []);
+
   return (
     <html lang="en">
-      <body>
-        <Nav />
-
-        {children}
+      <body className="bg-stone-100">
+        <AuthContextProvider>
+          {<Nav />}
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
   );
