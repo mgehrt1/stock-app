@@ -75,8 +75,8 @@ export const LogIn = () => {
   return (
     <div className="container bg-stone-100 ">
       <div className="flex justify-center content-center">
-        <div className="sign-up-page bg-stone-100 col-12 col-md-auto justify-content-center justify-content-md-between">
-          <h1 className="sign-up-text font-semibold leading-7 text-gray-900">
+        <div className="rounded-3xl p-3 m-3 border-1 border-neutral-900 text-xl text-center bg-stone-100 col-12 col-md-auto justify-content-center justify-content-md-between">
+          <h1 className="sign-up-text pt-4 font-semibold leading-7 text-gray-900">
             Sign In
           </h1>
           <input
@@ -100,7 +100,7 @@ export const LogIn = () => {
 
           <button
             onClick={LogIn}
-            className="sign-up-btn font-semibold leading-7 text-gray-900"
+            className="sign-up-btn font-semibold p-2 leading-7 text-gray-900"
           >
             Sign In
           </button>
@@ -248,7 +248,7 @@ export const LogIn = () => {
           </button>
           <br></br>
           <br />
-          <button className="font-semibold leading-7 text-gray-900">
+          <button className=" pb-4 font-semibold leading-7 text-gray-900">
             <Link href={"/sign-up"} className="sign-up-btn-text">
               Create Account?
             </Link>

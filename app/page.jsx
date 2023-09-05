@@ -5,11 +5,9 @@ import Image from "next/image";
 // server side component
 export default function Home() {
   return (
-    <div className="gx tv asb cfp dds background">
-      <h1 className="avt awd awx bbz text-center chz">
-        Welcome to the Stock App
-      </h1>
-      <p className="lk avs awr bbz text-center">
+    <div className=" text-center font-thin background">
+      <h1 className=" text-7xl mt-40  ">Welcome to the Stock App</h1>
+      <p className=" text-3xl mt-3">
         Explore stocks, keep a portfolio, and view live stock tickers
       </p>
     </div>

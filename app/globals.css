@@ -6,6 +6,73 @@ body {
   height: 100vh;
 }
 
+.explore-btn {
+  flex: 0 0 auto;
+
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  font-weight: 450;
+  border: solid #6366f1 2px;
+  border-radius: 15px;
+
+  margin: 5px 0 20px 0;
+  background-color: rgb(249, 250, 251);
+  transition: 0.5s;
+}
+
+.search-ticker-input {
+  flex: 0 0 auto;
+  width: 75%;
+  border: solid rgb(125, 124, 124) 2px;
+  border-radius: 10px;
+  padding: 5% 10px 10px 10px;
+  margin: 6px 0px 6px 0px;
+}
+
+.explore-btn:hover {
+  background: #6366f1;
+  letter-spacing: 0.2em;
+  color: whitesmoke;
+  box-shadow: 0 0 10px #6366f1;
+}
+
+.explore-btn:before {
+  content: "";
+  position: absolute;
+  /*inset: 2px; */
+  background: #6366f1;
+}
+
+.explore-btn-text {
+  flex: 0 0 auto;
+  width: 75%;
+}
+
+.explore-page-text {
+  text-align: left;
+  color: rgb(29, 4, 4);
+  font-family: "Times New Roman", Times, serif;
+  font-size: 25px;
+}
+
+.recommend-key-hold {
+  color: rgb(216, 17, 57);
+
+  text-transform: uppercase;
+}
+
+.recommend-key-buy {
+  color: rgb(14, 234, 14);
+
+  text-transform: uppercase;
+}
+
+.react-icons {
+  height: 50px;
+  width: 50px;
+}
+
 .spinner {
   height: 110px;
   width: 110px;
@@ -20,6 +87,16 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.proj-cards {
+  transition: 0.5s;
+}
+
+.proj-cards:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 25px #6366f1;
+  letter-spacing: 0.1em;
 }
 
 .forgotPasswordLink {
@@ -92,17 +169,16 @@ body {
 
 .sign-up-btn {
   flex: 0 0 auto;
-  width: 75%;
+
   text-transform: uppercase;
   font-size: 1em;
   letter-spacing: 0.1em;
   font-weight: 450;
   border: solid #6366f1 2px;
   border-radius: 15px;
-  padding: 5px 15px 5px 15px;
-  margin: 5px 0 5px 0;
+
   background-color: rgb(249, 250, 251);
-  transition: 0.8s;
+  transition: 0.5s;
 }
 
 .sign-up-btn:hover {

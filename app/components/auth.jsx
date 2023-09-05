@@ -110,8 +110,8 @@ export const Auth = () => {
   return (
     <div className="container">
       <div className="d-flex flex-wrap align-items-center justify-content-center">
-        <div className="sign-up-page col-12 col-md-auto justify-content-center justify-content-md-between font-semibold leading-7 text-gray-900">
-          <h1 className="sign-up-text">Sign Up</h1>
+        <div className="rounded-3xl p-4 m-3 border-1 border-neutral-900 text-center col-12 col-md-auto justify-content-center justify-content-md-between font-semibold leading-7 text-gray-900">
+          <h1 className="sign-up-text pt-3">Sign Up</h1>
           <br></br>
           <input
             className="input"
@@ -137,13 +137,13 @@ export const Auth = () => {
           ></input>
           <br></br>
           <p className="err-text">{error}</p>
-          <button onClick={signUp} className="sign-up-btn">
+          <button onClick={signUp} className="sign-up-btn p-2 mb-2">
             <Link href={""} className="sign-up-btn-text">
               Sign up
             </Link>
           </button>
           <br></br>
-          <button className="sign-up-btn">
+          <button className="sign-up-btn p-2 mb-2">
             <Link href={"/sign-in"} className="sign-up-btn-text">
               Sign In
             </Link>
