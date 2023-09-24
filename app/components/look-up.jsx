@@ -72,7 +72,7 @@ export const LookUp = () => {
     //   method: "GET",
 
     //   headers: {
-    //     "X-RapidAPI-Key": "2ff77addadmshafbc86675fd47cdp10f6afjsnb2d959a3dbae",
+    //     "X-RapidAPI-Key": process.env.API_KEY,
     //     "X-RapidAPI-Host": "yahoo-finance127.p.rapidapi.com",
     //   },
     // };
