@@ -370,7 +370,7 @@ export default function Nav() {
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                        Stocks
+                        Info
                         <ChevronDownIcon
                           className={classNames(
                             open ? "rotate-180" : "",
@@ -395,7 +395,7 @@ export default function Nav() {
                   )}
                 </Disclosure>
                 <a
-                  href="/"
+                  href="/explore"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Explore

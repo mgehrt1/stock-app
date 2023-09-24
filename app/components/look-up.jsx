@@ -66,16 +66,16 @@ export const LookUp = () => {
       },
     };
 
-    const historyUrl = `https://yahoo-finance127.p.rapidapi.com/historic/${stock}/5m/1d`;
+    // const historyUrl = `https://yahoo-finance127.p.rapidapi.com/historic/${stock}/5m/1d`;
 
-    const optionsYH = {
-      method: "GET",
+    // const optionsYH = {
+    //   method: "GET",
 
-      headers: {
-        "X-RapidAPI-Key": "2ff77addadmshafbc86675fd47cdp10f6afjsnb2d959a3dbae",
-        "X-RapidAPI-Host": "yahoo-finance127.p.rapidapi.com",
-      },
-    };
+    //   headers: {
+    //     "X-RapidAPI-Key": "2ff77addadmshafbc86675fd47cdp10f6afjsnb2d959a3dbae",
+    //     "X-RapidAPI-Host": "yahoo-finance127.p.rapidapi.com",
+    //   },
+    // };
 
     try {
       const responseFinancial = await fetch(url, options);
@@ -151,8 +151,8 @@ export const LookUp = () => {
         </div>
       ) : (
         <>
-          <div className="flex justify-left">
-            <div className="container font-thin">
+          <div className="flex justify-center items-center">
+            <div className=" p-3 font-thin">
               <h1 className=" text-5xl  leading-7 text-gray-900">Explore</h1>
               <br></br>
               <form
@@ -175,143 +175,149 @@ export const LookUp = () => {
                 />
                 <br />
               </form>
+              <div className="">
+                {symbol != null && exchange != null && displayName != null && (
+                  <>
+                    <p className=" text-5xl text-left  text-gray-900">
+                      {displayName}
+                    </p>
 
-              {symbol != null && exchange != null && displayName != null && (
-                <>
-                  <p className=" text-5xl text-left  text-gray-900">
-                    {displayName}
-                  </p>
+                    <p className="text-2xl text-left  text-gray-900">
+                      {exchange}: {symbol}
+                    </p>
 
-                  <p className="text-2xl text-left  text-gray-900">
-                    {exchange}: {symbol}
-                  </p>
-
-                  {price >= 0 && <p className=" pb-1 text-6xl">${price} </p>}
-                  <p className="text-2xl">
-                    {regularMarketTime &&
-                      regularMarketTime.toLocaleTimeString()}
-                  </p>
-                  {change != null && (
-                    <div
-                      className={
-                        change > 0
-                          ? " mr-24 p-1 text-justify text-2xl rounded-lg bg-green-500"
-                          : " mr-24 p-1 text-justify text-2xl bg-red-500 rounded-lg"
-                      }
-                    >
-                      {change && changePercentage > 0 ? (
-                        <p>
-                          +{change} (+{changePercentage}%)
-                        </p>
-                      ) : (
-                        <p>
-                          {change} ({changePercentage}%)
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </>
-              )}
+                    {price >= 0 && <p className=" pb-1 text-6xl">${price} </p>}
+                    <p className="text-2xl">
+                      {regularMarketTime &&
+                        regularMarketTime.toLocaleTimeString()}
+                    </p>
+                    {change != null && (
+                      <div
+                        className={
+                          change > 0
+                            ? " p-1  text-2xl rounded-lg bg-green-500"
+                            : " p-1  text-2xl bg-red-500 rounded-lg"
+                        }
+                      >
+                        {change && changePercentage > 0 ? (
+                          <p>
+                            +{change} (+{changePercentage}%)
+                          </p>
+                        ) : (
+                          <p>
+                            {change} ({changePercentage}%)
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    <button className=" justify-center">
+                      Add to portfolio
+                    </button>
+                  </>
+                )}
+              </div>
 
               <br />
             </div>
-            <div
-              className={
-                price != null
-                  ? " flex justify-end rounded-2xl p-3 border-1 border-neutral-900 text-xl"
-                  : ""
-              }
-            >
-              {targetHighPrice >= 0 ? (
-                <p className="border-1 border-transparent border-b-slate-900">
-                  Target High Price: ${targetHighPrice}
-                </p>
-              ) : (
-                ""
-              )}
+            <div className=" p-3 flex justify-between items-center">
+              <ResponsiveContainer width="100%" height={400} className="">
+                <AreaChart
+                  width={500}
+                  height={200}
+                  data={data}
+                  margin={{
+                    top: 10,
+                    right: 30,
+                    left: 0,
+                    bottom: 0,
+                  }}
+                >
+                  <XAxis dataKey="x" />
+                  <YAxis domain={["auto", "auto"]} />
+                  <Tooltip />
+                  <Area
+                    type="monotone"
+                    dataKey="y"
+                    stroke={change > 0 ? "#00ff00" : "#ff3300"}
+                    fill={change > 0 ? "#00ff00" : "#ff3300"}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
 
-              {targetLowPrice >= 0 ? (
-                <p className="border-1 border-transparent border-b-slate-900">
-                  Target Low Price: ${targetLowPrice}
-                </p>
-              ) : (
-                ""
-              )}
+              <div
+                className={
+                  price != null
+                    ? " rounded-2xl p-4 mx-3 border-1 border-neutral-900 text-xl"
+                    : ""
+                }
+              >
+                {targetHighPrice >= 0 ? (
+                  <p className="border-1 border-transparent border-b-slate-900">
+                    Target High Price: ${targetHighPrice}
+                  </p>
+                ) : (
+                  ""
+                )}
 
-              {targetMeanPrice >= 0 ? (
-                <p className="border-1 border-transparent border-b-slate-900">
-                  Target Mean Price: ${targetMeanPrice}
-                </p>
-              ) : (
-                ""
-              )}
+                {targetLowPrice >= 0 ? (
+                  <p className="border-1 border-transparent border-b-slate-900">
+                    Target Low Price: ${targetLowPrice}
+                  </p>
+                ) : (
+                  ""
+                )}
 
-              {targetMedianPrice >= 0 ? (
-                <p className="border-1 border-transparent border-b-slate-900">
-                  Target Median Price: ${targetMedianPrice}
-                </p>
-              ) : (
-                ""
-              )}
+                {targetMeanPrice >= 0 ? (
+                  <p className="border-1 border-transparent border-b-slate-900">
+                    Target Mean Price: ${targetMeanPrice}
+                  </p>
+                ) : (
+                  ""
+                )}
 
-              {recommendationMean >= 0 ? (
-                <p className="border-1 border-transparent border-b-slate-900">
-                  Recommendation Mean: ${recommendationMean}
-                </p>
-              ) : (
-                ""
-              )}
+                {targetMedianPrice >= 0 ? (
+                  <p className="border-1 border-transparent border-b-slate-900">
+                    Target Median Price: ${targetMedianPrice}
+                  </p>
+                ) : (
+                  ""
+                )}
 
-              {recommendationKey != null ? (
-                <p>
-                  Recommendation Key:{" "}
-                  <span
-                    className={
-                      recommendationKey == "hold"
-                        ? "recommend-key-hold font-semibold text-xl"
-                        : "recommend-key-buy font-semibold text-xl"
-                    }
-                  >
-                    {recommendationKey}
-                  </span>
-                </p>
-              ) : (
-                ""
-              )}
+                {recommendationMean >= 0 ? (
+                  <p className="border-1 border-transparent border-b-slate-900">
+                    Recommendation Mean: ${recommendationMean}
+                  </p>
+                ) : (
+                  ""
+                )}
 
-              {currentRatio != null ? (
-                <p className="border-1 border-transparent border-b-slate-900">
-                  Current Ratio: %{currentRatio}
-                </p>
-              ) : (
-                ""
-              )}
+                {recommendationKey != null ? (
+                  <p>
+                    Recommendation Key:{" "}
+                    <span
+                      className={
+                        recommendationKey == "hold"
+                          ? "recommend-key-hold font-semibold text-xl"
+                          : "recommend-key-buy font-semibold text-xl"
+                      }
+                    >
+                      {recommendationKey}
+                    </span>
+                  </p>
+                ) : (
+                  ""
+                )}
+
+                {currentRatio != null ? (
+                  <p className="border-1 border-transparent border-b-slate-900">
+                    Current Ratio: %{currentRatio}
+                  </p>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
-
-          <ResponsiveContainer width="100%" height={400}>
-            <AreaChart
-              width={500}
-              height={200}
-              data={data}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <XAxis dataKey="x" />
-              <YAxis domain={["auto", "auto"]} />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="y"
-                stroke={change > 0 ? "#00ff00" : "#ff3300"}
-                fill={change > 0 ? "#00ff00" : "#ff3300"}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
         </>
       )}
     </>
