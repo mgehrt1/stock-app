@@ -3,18 +3,9 @@
 import React, { PureComponent } from "react";
 
 import { useState, useEffect } from "react";
-import Ticker from "@app/stock/[ticker]/page";
-import { Loader } from "@app/components/loader";
-import { HiArrowUp } from "react-icons/hi";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+
+import Dog from "./Dog";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 let data = [];
 
@@ -22,304 +13,139 @@ let data = [];
     lookUp component for explore page
 */
 export const LookUp = () => {
-  const [stock, setStock] = useState("");
-  const [price, setPrice] = useState(null);
-  const [targetHighPrice, setTargetHighPrice] = useState(-1);
-  const [targetLowPrice, setTargetLowPrice] = useState(-1);
-  const [targetMeanPrice, setTargetMeanPrice] = useState(-1);
-  const [targetMedianPrice, setTargetMedianPrice] = useState(-1);
-  const [recommendationMean, setRecommendationMean] = useState(-1);
-  const [recommendationKey, setRecommendationKey] = useState(null);
-  const [currentRatio, setCurrentRatio] = useState(null);
+  const [breeds, setBreeds] = useState([]);
+  const [breedPics, setBreedPics] = useState([]);
 
-  const [change, setChange] = useState(0);
-  const [changePercentage, setChangePercentage] = useState(0);
-  const [symbol, setSymbol] = useState(null);
-  const [exchange, setExchange] = useState(null);
-  const [displayName, setDisplayName] = useState(null);
-  const [regularMarketTime, setRegularMarketTime] = useState(null);
-  // const [data, setData] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 50));
-      setLoading(false);
-    };
-    checkAuth();
-  });
+  const [errMessage, setErrMessage] = useState("");
+  const [err, setErr] = useState(false);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // API SETUP
-    const url = `https://mboum-finance.p.rapidapi.com/mo/module/?symbol=${stock}&module=financial-data`;
-    const quoteUrl = `https://mboum-finance.p.rapidapi.com/qu/quote/?symbol=${stock}`;
+    // API requests for each breed in the breeds array
+    const fetchBreedsData = async (breed) => {
+      const url = `https://dog.ceo/api/breed/${breed}/images`;
 
-    const options = {
-      method: "GET",
-
-      headers: {
-        "X-RapidAPI-Key": process.env.API_KEY,
-        "X-RapidAPI-Host": "mboum-finance.p.rapidapi.com",
-      },
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+        if (result.code == 404) {
+          setErr(true);
+          setErrMessage("Sorry, that breeds does not exist");
+        } else {
+          setErr(false);
+          setErrMessage("");
+        }
+        console.log(result.message);
+        return { breed, pics: result.message };
+      } catch (err) {
+        console.error(`Error fetching data for ${breed}:`, err);
+        return null;
+      }
     };
 
-    // const historyUrl = `https://yahoo-finance127.p.rapidapi.com/historic/${stock}/5m/1d`;
+    const fetchDataForBreeds = async () => {
+      const requests = breeds.map((breed) => fetchBreedsData(breed.trim()));
+      const breedData = await Promise.all(requests);
+      const validBreedsData = breedData.filter((data) => data !== null);
+      setBreedPics(validBreedsData);
+    };
 
-    // const optionsYH = {
-    //   method: "GET",
-
-    //   headers: {
-    //     "X-RapidAPI-Key": process.env.API_KEY,
-    //     "X-RapidAPI-Host": "yahoo-finance127.p.rapidapi.com",
-    //   },
-    // };
-
-    try {
-      const responseFinancial = await fetch(url, options);
-      const responseQuote = await fetch(quoteUrl, options);
-      const responseChart = await fetch(historyUrl, optionsYH);
-
-      setLoading(false);
-      const resultFinancial = await responseFinancial.json();
-      const resultQuote = await responseQuote.json();
-      const resultChart = await responseChart.json();
-
-      const quote = resultChart.indicators.quote[0];
-
-      data = resultChart.timestamp.map((timestamp, index) => ({
-        x: new Date(timestamp * 1000).toLocaleTimeString(),
-
-        y: quote.open[index],
-      }));
-
-      console.log(data);
-      console.log(resultFinancial);
-      console.log(resultQuote);
-
-      // financialData stats
-
-      const price = resultFinancial.financialData?.currentPrice.raw;
-      const targetHighPrice =
-        resultFinancial.financialData?.targetHighPrice.raw;
-      const targetLowPrice = resultFinancial.financialData?.targetLowPrice.raw;
-      const targetMeanPrice =
-        resultFinancial.financialData?.targetMeanPrice.raw;
-      const targetMedianPrice =
-        resultFinancial.financialData?.targetMedianPrice.raw;
-      const recommendationMean =
-        resultFinancial.financialData?.recommendationMean.raw;
-      const recommendationKey =
-        resultFinancial.financialData?.recommendationKey;
-
-      setPrice(price);
-      setTargetHighPrice(targetHighPrice);
-      setTargetLowPrice(targetLowPrice);
-      setTargetMeanPrice(targetMeanPrice);
-      setTargetMedianPrice(targetMedianPrice);
-      setRecommendationMean(recommendationMean);
-      setRecommendationKey(recommendationKey);
-      setCurrentRatio(currentRatio);
-
-      // quote stats
-      const change = resultQuote[0].regularMarketChange;
-      const symbol = resultQuote[0].symbol;
-      const exchange = resultQuote[0].exchange;
-      const displayName = resultQuote[0].displayName;
-      const changePercentage = resultQuote[0].regularMarketChangePercent;
-      const regularMarketTime = resultQuote[0].regularMarketTime;
-
-      setChange(change);
-      setSymbol(symbol);
-      setExchange(exchange);
-      setDisplayName(displayName);
-      setChangePercentage(changePercentage);
-      setRegularMarketTime(new Date(regularMarketTime * 1000));
-      console.log(regularMarketTime);
-    } catch (error) {
-      console.log(error);
-    }
+    fetchDataForBreeds();
   };
 
+  //   const url = `https://dog.ceo/api/breeds/${breeds}/images`;
+
+  //   const options = {
+  //     method: "GET",
+  //   };
+
+  //   try {
+  //     const response = await fetch(url, options);
+  //     const result = await response.json();
+  //     if (result.code == 404) {
+  //       setErr(true);
+  //       setErrMessage("Sorry, that breeds does not exist");
+  //     } else {
+  //       setErr(false);
+  //       setErrMessage("");
+  //     }
+  //     console.log(result);
+  //     setBreedPics(result.message);
+  //   } catch (err) {
+  //     console.log(err);
+  //     setErr(true);
+  //   }
+  // };
+
+  // try {
+  //   useEffect(() => {
+  //     setImages(
+
+  //     );
+  //   }, [breedPics]);
+  // } catch (err) {
+  //   console.log(err);
+  // }
+
   return (
-    <>
-      {loading ? (
-        <div className=" flex justify-center">
-          <Loader />
-        </div>
-      ) : (
-        <>
-          <div className="flex justify-center items-center">
-            <div className=" p-3 font-thin">
-              <h1 className=" text-5xl  leading-7 text-gray-900">Explore</h1>
-              <br></br>
-              <form
-                onSubmit={handleFormSubmit}
-                className=" flex-col items-center"
-              >
-                <input
-                  type="text"
-                  name="ticker"
-                  placeholder="Search ticker..."
-                  value={stock}
-                  onChange={(e) => setStock(e.target.value)}
-                  className="search-ticker-input border-2 border-black"
-                />
-                <br />
-                <input
-                  type="submit"
-                  value="Search"
-                  className="explore-btn p-2"
-                />
-                <br />
-              </form>
-              <div className="">
-                {symbol != null && exchange != null && displayName != null && (
-                  <>
-                    <p className=" text-5xl text-left  text-gray-900">
-                      {displayName}
-                    </p>
-
-                    <p className="text-2xl text-left  text-gray-900">
-                      {exchange}: {symbol}
-                    </p>
-
-                    {price >= 0 && <p className=" pb-1 text-6xl">${price} </p>}
-                    <p className="text-2xl">
-                      {regularMarketTime &&
-                        regularMarketTime.toLocaleTimeString()}
-                    </p>
-                    {change != null && (
-                      <div
-                        className={
-                          change > 0
-                            ? " p-1  text-2xl rounded-lg bg-green-500"
-                            : " p-1  text-2xl bg-red-500 rounded-lg"
-                        }
-                      >
-                        {change && changePercentage > 0 ? (
-                          <p>
-                            +{change} (+{changePercentage}%)
-                          </p>
-                        ) : (
-                          <p>
-                            {change} ({changePercentage}%)
-                          </p>
-                        )}
-                      </div>
-                    )}
-                    <button className=" justify-center">
-                      Add to portfolio
-                    </button>
-                  </>
-                )}
-              </div>
-
-              <br />
+    <div className="container">
+      <div className="flex justify-center items-center">
+        <form onSubmit={handleFormSubmit}>
+          <div className="">
+            <div className=" flex justify-center items-center">
+              <input
+                type="text"
+                name="breeds"
+                placeholder="Search breeds...(breed, ...)"
+                value={breeds.join(",")}
+                onChange={(e) => setBreeds(e.target.value.split(","))}
+                className=" p-3 border rounded"
+              />
             </div>
-            <div className=" p-3 flex justify-between items-center">
-              <ResponsiveContainer width="100%" height={400} className="">
-                <AreaChart
-                  width={500}
-                  height={200}
-                  data={data}
-                  margin={{
-                    top: 10,
-                    right: 30,
-                    left: 0,
-                    bottom: 0,
-                  }}
-                >
-                  <XAxis dataKey="x" />
-                  <YAxis domain={["auto", "auto"]} />
-                  <Tooltip />
-                  <Area
-                    type="monotone"
-                    dataKey="y"
-                    stroke={change > 0 ? "#00ff00" : "#ff3300"}
-                    fill={change > 0 ? "#00ff00" : "#ff3300"}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
 
-              <div
-                className={
-                  price != null
-                    ? " rounded-2xl p-4 mx-3 border-1 border-neutral-900 text-xl"
-                    : ""
-                }
-              >
-                {targetHighPrice >= 0 ? (
-                  <p className="border-1 border-transparent border-b-slate-900">
-                    Target High Price: ${targetHighPrice}
-                  </p>
-                ) : (
-                  ""
-                )}
-
-                {targetLowPrice >= 0 ? (
-                  <p className="border-1 border-transparent border-b-slate-900">
-                    Target Low Price: ${targetLowPrice}
-                  </p>
-                ) : (
-                  ""
-                )}
-
-                {targetMeanPrice >= 0 ? (
-                  <p className="border-1 border-transparent border-b-slate-900">
-                    Target Mean Price: ${targetMeanPrice}
-                  </p>
-                ) : (
-                  ""
-                )}
-
-                {targetMedianPrice >= 0 ? (
-                  <p className="border-1 border-transparent border-b-slate-900">
-                    Target Median Price: ${targetMedianPrice}
-                  </p>
-                ) : (
-                  ""
-                )}
-
-                {recommendationMean >= 0 ? (
-                  <p className="border-1 border-transparent border-b-slate-900">
-                    Recommendation Mean: ${recommendationMean}
-                  </p>
-                ) : (
-                  ""
-                )}
-
-                {recommendationKey != null ? (
-                  <p>
-                    Recommendation Key:{" "}
-                    <span
-                      className={
-                        recommendationKey == "hold"
-                          ? "recommend-key-hold font-semibold text-xl"
-                          : "recommend-key-buy font-semibold text-xl"
-                      }
-                    >
-                      {recommendationKey}
-                    </span>
-                  </p>
-                ) : (
-                  ""
-                )}
-
-                {currentRatio != null ? (
-                  <p className="border-1 border-transparent border-b-slate-900">
-                    Current Ratio: %{currentRatio}
-                  </p>
-                ) : (
-                  ""
-                )}
-              </div>
+            <div className="flex justify-center py-2">
+              <input
+                type="submit"
+                value="Search"
+                className=" border rounded bg-green-500 p-2"
+              />
             </div>
+
+            {errMessage != "" ? (
+              <p className="border-1 border-red-500 rounded p-2 text-red-500">
+                {errMessage}
+              </p>
+            ) : (
+              ""
+            )}
+
+            <br />
           </div>
-        </>
-      )}
-    </>
+        </form>
+      </div>
+      <div className="">
+        {err == false ? (
+          <>
+            {breedPics.map(({ breed, pics }) => (
+              <div key={breed} className="container mx-auto p-5">
+                <div className="grid grid-cols-3 gap-5">
+                  {pics.map((pic, index) => (
+                    <img
+                      key={index}
+                      src={pic}
+                      alt="dogs"
+                      className="block h-full w-full rounded-lg object-cover object-center"
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+    </div>
   );
 };

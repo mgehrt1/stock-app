@@ -4,8 +4,6 @@ import Link from "next/link";
 import "app/globals.css";
 import "app/bootstrap.min.css";
 import Image from "next/image";
-import { UserAuth } from "@app/context/AuthContext";
-import loader from "./loader";
 
 import {
   createUserWithEmailAndPassword,
@@ -72,18 +70,18 @@ export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userInfo, setUserInfo] = useState([]);
   // const [user, setUser] = useState({});
-  const { user, signInWithGoogle, logout } = UserAuth();
+  // const { user, signInWithGoogle, logout } = UserAuth();
   const [loading, setLoading] = useState(true);
 
   const userCollectionRef = collection(db, "users");
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 50));
-      setLoading(false);
-    };
-    checkAuth();
-  }, [user]);
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     await new Promise((resolve) => setTimeout(resolve, 50));
+  //     setLoading(false);
+  //   };
+  //   checkAuth();
+  // }, [user]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -144,20 +142,7 @@ export default function Nav() {
       >
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Rohrs Stock's</span>
-            <svg
-              fill="#000000"
-              width="60px"
-              height="60px"
-              viewBox="0 0 16 16"
-              xmlns="http://www.w3.org/2000/svg"
-              className="shadow-lg nav-start-add-on nav-start-animate"
-            >
-              <path
-                d="M0 14h16v2H0v-2zm8.5-8l4-4H11V0h5v5h-2V3.5L9.5 8l-1 1-2-2-5 5L0 10.5 6.5 4 8 5.5l.5.5z"
-                fillRule="evenodd"
-              />
-            </svg>
+            Dog Gallery Home
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -170,16 +155,8 @@ export default function Nav() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12 bg-stone-100 shadow-lg  nav-md-add-on nav-md-animate">
+        <Popover.Group className="hidden lg:flex lg:gap-x-12 bg-stone-100 ">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-base font-semibold leading-6 text-gray-900">
-              Stocks
-              <ChevronDownIcon
-                className="h-5 w-5 flex-none text-gray-400"
-                aria-hidden="true"
-              />
-            </Popover.Button>
-
             <Transition
               as={Fragment}
               enter="transition ease-out duration-200"
@@ -188,36 +165,7 @@ export default function Nav() {
               leave="transition ease-in duration-150"
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                <div className="p-4">
-                  {products.map((item) => (
-                    <div
-                      key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-                    >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <item.icon
-                          className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="flex-auto">
-                        <a
-                          href={item.href}
-                          className="block font-semibold text-gray-900"
-                        >
-                          {item.name}
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50"></div>
-              </Popover.Panel>
-            </Transition>
+            ></Transition>
           </Popover>
 
           <a
@@ -226,105 +174,21 @@ export default function Nav() {
           >
             Explore
           </a>
-          <a
-            href="/user-portfolio"
-            className="text-base font-semibold leading-6 text-gray-900"
-          >
-            Portfolio
-          </a>
+
           <a
             href="/about"
             className="text-base font-semibold leading-6 text-gray-900"
           >
             About
           </a>
-        </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {loading ? null : !user ? (
-            <a
-              href="/sign-in"
-              className="text-lg font-semibold leading-6 text-gray-900"
-            >
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
-          ) : (
-            <div>
-              <Popover.Group className="hidden lg:flex lg:gap-x-12 bg-stone-100 shadow-lg  nav-md-add-on nav-md-animate">
-                <Popover className="relative">
-                  <Popover.Button className="flex items-center gap-x-0 text-base font-semibold leading-6 text-gray-900">
-                    <div>
-                      {user?.photoURL == null ? (
-                        <div className="nav-login-text">
-                          Welcome,
-                          {userInfo.map((userInfo) => (
-                            <div key={userInfo.email}>
-                              {user?.email == userInfo.email
-                                ? userInfo.username
-                                : ""}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p>
-                          {
-                            <img
-                              src={user?.photoURL}
-                              height={"40"}
-                              width={"40"}
-                              className="user-pic"
-                            ></img>
-                          }
-                        </p>
-                      )}
-                    </div>
-                    <ChevronDownIcon
-                      className="h-5 w-5 flex-none text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </Popover.Button>
 
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-200"
-                    enterFrom="opacity-0 translate-y-1"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in duration-150"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-1"
-                  >
-                    <Popover.Panel className=" absolute -left-0 top-full z-10 mt-3  rounded-3xl bg-white">
-                      <div className="p-3">
-                        {userDropdown.map((item) => (
-                          <div key={item.name} className="">
-                            <div className=""></div>
-                            <div className="">
-                              <a
-                                href={
-                                  item.name == "My Profile" ? "/profile" : "/"
-                                }
-                                onClick={
-                                  item.name == "Logout"
-                                    ? handleSignOut
-                                    : undefined
-                                }
-                                className="block font-semibold text-gray-900"
-                              >
-                                {item.name}
-                                <span className="absolu" />
-                              </a>
-                              <br />
-                              <p className="mt-1 text-gray-600"></p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </Popover.Panel>
-                  </Transition>
-                </Popover>
-              </Popover.Group>
-            </div>
-          )}
-        </div>
+          <a
+            href="/breeds"
+            className="text-base font-semibold leading-6 text-gray-900"
+          >
+            Breed List
+          </a>
+        </Popover.Group>
       </nav>
 
       {/* ---------------------------------------------------------MOBILE SECTION--------------------------------------------------------- */}
@@ -338,21 +202,10 @@ export default function Nav() {
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Rohrs Stock</span>
-              <svg
-                fill="#000000"
-                width="30px"
-                height="30px"
-                viewBox="0 0 16 16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0 14h16v2H0v-2zm8.5-8l4-4H11V0h5v5h-2V3.5L9.5 8l-1 1-2-2-5 5L0 10.5 6.5 4 8 5.5l.5.5z"
-                  fillRule="evenodd"
-                />
-              </svg>
+            <a href="/" className="-m-1.5 p-1.5 font-thin">
+              Dog Gallery Home
             </a>
+
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -369,7 +222,7 @@ export default function Nav() {
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
-                      <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                      {/* <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
                         Info
                         <ChevronDownIcon
                           className={classNames(
@@ -390,7 +243,7 @@ export default function Nav() {
                             {item.name}
                           </Disclosure.Button>
                         ))}
-                      </Disclosure.Panel>
+                      </Disclosure.Panel> */}
                     </>
                   )}
                 </Disclosure>
@@ -401,20 +254,20 @@ export default function Nav() {
                   Explore
                 </a>
                 <a
-                  href="/"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Portfolio
-                </a>
-                <a
                   href="/about"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   About
                 </a>
+                <a
+                  href="/breeds"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  Breed List
+                </a>
               </div>
               {/* AUTH SECTION */}
-              <div className="py-6">
+              {/* <div className="py-6">
                 {user?.email == null ? (
                   <a
                     href="/sign-in"
@@ -431,7 +284,7 @@ export default function Nav() {
                     Log out
                   </a>
                 )}
-              </div>
+              </div> */}
             </div>
           </div>
         </Dialog.Panel>
