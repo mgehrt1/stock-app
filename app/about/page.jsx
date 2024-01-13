@@ -16,15 +16,14 @@ export default function About() {
       </p>
 
       <p>
-        During my freetime this past summer, I learned about HTML,
-        CSS/Tailwind/Bootstrap, React, Next.js routing and Firebase in order to
-        create a User Authentication feature and Navbar in this in-progress
-        Stock App
+        This is a personal project that I have built from the ground up starting
+        Summer 2023. I have incorporated skills and technologies I have learned
+        both in school and on my own in order to provide stock data and charts.
       </p>
 
       <br />
 
-      <div className="flex justify-between h-60 space-x-10">
+      {/* <div className="flex justify-between h-60 space-x-10">
         <a
           href="https://github.com/jrohrs12/airline-flight-system"
           className="border-4 border-indigo-500/100 w-1/3 p-4 rounded text-left proj-cards"
@@ -39,7 +38,7 @@ export default function About() {
         <div className="border-4 border-indigo-500/100 w-1/3 p-4 rounded proj-cards">
           Project 3
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

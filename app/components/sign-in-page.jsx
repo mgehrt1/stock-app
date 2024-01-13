@@ -73,48 +73,46 @@ export const LogIn = () => {
   };
 
   return (
-    <div className="container bg-stone-100 ">
-      <div className="flex justify-center content-center">
-        <div className="rounded-3xl p-3 m-3 border-1 border-neutral-900 text-xl text-center bg-stone-100 col-12 col-md-auto justify-content-center justify-content-md-between">
-          <h1 className="sign-up-text pt-4 font-semibold leading-7 text-gray-900">
-            Sign In
-          </h1>
-          <input
-            value={signInEmail}
-            placeholder="Email"
-            onChange={(e) => setSignInEmail(e.target.value)}
-            className="input font-semibold leading-7 text-gray-900"
-            type="text"
-            id="email"
-          ></input>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="max-w-md w-full p-6 bg-white shadow-lg rounded-md">
+        {/* <div className="rounded-3xl p-3 m-3 border-1 border-neutral-900 text-xl text-center bg-stone-100 col-12 col-md-auto justify-content-center justify-content-md-between"> */}
+        <h1 className="text-3xl font-semibold text-gray-900 mb-6">Sign In</h1>
+        <input
+          value={signInEmail}
+          placeholder="Email"
+          onChange={(e) => setSignInEmail(e.target.value)}
+          className="input"
+          type="text"
+          id="email"
+        ></input>
 
-          <input
-            value={signInPassword}
-            placeholder="Password"
-            onChange={(e) => setSignInPassword(e.target.value)}
-            className="input font-semibold leading-7 text-gray-900"
-            type="password"
-            id="password"
-          ></input>
-          <p className="err-text">{error}</p>
+        <input
+          value={signInPassword}
+          placeholder="Password"
+          onChange={(e) => setSignInPassword(e.target.value)}
+          className="input mt-4"
+          type="password"
+          id="password"
+        ></input>
+        <p className="text-red-500 mt-2">{error}</p>
 
-          <button
-            onClick={LogIn}
-            className="sign-up-btn font-semibold p-2 leading-7 text-gray-900"
-          >
-            Sign In
-          </button>
+        <button
+          onClick={LogIn}
+          className="bg-blue-500 text-white px-4 py-2 rounded-full hover:shadow-lg focus:outline-none focus:ring focus:border-blue-500"
+        >
+          Sign In
+        </button>
 
-          <br></br>
-          <button>
+        <div className=" flex flex-col">
+          <button className="btn-google p-3" onClick={handleSignInWithGoogle}>
             <svg
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
               width="60px"
               height="60px"
               viewBox="0 0 48 55"
-              className="flex-center align-items-center justify-content-center "
-              onClick={handleSignInWithGoogle}
+              // className="flex-center align-items-center justify-content-center "
+              // onClick={handleSignInWithGoogle}
             >
               <defs>
                 <filter
@@ -246,13 +244,14 @@ export const LogIn = () => {
               </g>
             </svg>
           </button>
-          <br></br>
-          <br />
-          <button className=" pb-4 font-semibold leading-7 text-gray-900">
-            <Link href={"/sign-up"} className="sign-up-btn-text">
-              Create Account?
-            </Link>
-          </button>
+
+          <div className=" flex justify-center">
+            <button className="font-semibold leading-7 text-gray-900">
+              <Link href={"/sign-up"} className="text-blue-500">
+                Create Account?
+              </Link>
+            </button>
+          </div>
         </div>
       </div>
     </div>

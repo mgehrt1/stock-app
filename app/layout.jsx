@@ -14,6 +14,8 @@ import {
 import { db } from "./firebase-config";
 import { getDocs, collection } from "firebase/firestore";
 import { AuthContextProvider } from "./context/AuthContext";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+require("dotenv").config();
 
 export const metadata = {
   title: "Stock App by FMJ",
@@ -46,10 +48,12 @@ export default function Layout({ children }) {
   return (
     <html lang="en">
       <body className="bg-stone-100">
-        <AuthContextProvider>
-          {<Nav />}
-          {children}
-        </AuthContextProvider>
+        <SkeletonTheme baseColor="#A9A9A9" highlightColor="#696969">
+          <AuthContextProvider>
+            {<Nav />}
+            {children}
+          </AuthContextProvider>
+        </SkeletonTheme>
       </body>
     </html>
   );
